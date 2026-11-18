@@ -1,24 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8">
   <title>Fórmula Resolvente</title>
 </head>
-<body>
 
+<body>
   <script>
-    let a = Number(prompt("Valor de a:"));
-    let b = Number(prompt("Valor de b:"));
-    let c = Number(prompt("Valor de c:"));
-    let delta = b * b - 4 * a * c;
-    if (delta >= 0) {
-      let x1 = (-b + Math.sqrt(delta)) / (2 * a);
-      let x2 = (-b - Math.sqrt(delta)) / (2 * a);
-      alert("x1 = " + x1 + " e x2 = " + x2);
-    } else {
-      alert("Não existem raízes reais.");
+    // Pede um número ao utilizador. Devolve null se carregar em "Cancelar".
+    function lerNumero(mensagem) {
+      let texto = prompt(mensagem);
+      if (texto === null) {
+        return null;
+      }
+      return Number(texto);
+    }
+
+    let continuar = true;
+
+    while (continuar) {
+      // Validação: a não pode ser 0 nem texto inválido
+      let a;
+      do {
+        a = lerNumero("Valor de a (diferente de 0):");
+        if (a === null) break;
+        if (a === 0 || isNaN(a)) {
+          alert("O valor de a tem de ser um número diferente de zero.");
+        }
+      } while (a === 0 || isNaN(a));
+
+      if (a === null) break;
+
+      let b = lerNumero("Valor de b:");
+      let c = lerNumero("Valor de c:");
+      if (b === null || c === null) break;
+
+      if (isNaN(b) || isNaN(c)) {
+        alert("b e c têm de ser números.");
+        continue;
+      }
+
+      let delta = b * b - 4 * a * c;
+
+      if (delta >= 0) {
+        let x1 = (-b + Math.sqrt(delta)) / (2 * a);
+        let x2 = (-b - Math.sqrt(delta)) / (2 * a);
+        // Arredondamento a 2 casas decimais
+        alert("x1 = " + x1.toFixed(2) + " e x2 = " + x2.toFixed(2));
+      } else {
+        alert("Não existem raízes reais.");
+      }
+
+      // Voltar a correr sem atualizar a página
+      continuar = confirm("Queres resolver outra equação?");
     }
   </script>
-
 </body>
+
 </html>
